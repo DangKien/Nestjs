@@ -40,6 +40,7 @@ export class AppController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized...' })
   async getProfile(@Request() req) {
+    console.log(req.user);
     return this.authService.validateUser(req.user.username, req?.user.pass);
   }
 }

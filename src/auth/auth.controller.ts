@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Req, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { AuthService } from './auth.service';
@@ -15,12 +15,12 @@ export class AuthController {
     private configService: ConfigService,
   ) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtRefreshGuard)
   @Get('refresh/token')
   refreshTokens(@Req() req: Request) {
-    // const userId = req.user['sub'];
-    // const refreshToken = req.user['refreshToken'];
-    // return this.authService.refreshTokens(userId, refreshToken);
+    const userInform = req.user;
+    return this.authService.refreshTokens(userInform);
   }
 
   @Get('/facebook')

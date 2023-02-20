@@ -21,12 +21,9 @@ export class AuthService {
     const user = await this.userService.findByUserName(username);
     if (!user) return null;
 
-    if (username && user.password === pass) {
-      return {
-        ...user,
-      };
-    }
-    return null;
+    return {
+      ...user,
+    };
   }
 
   async loginWithCredentials(user: any) {
@@ -43,6 +40,21 @@ export class AuthService {
       }),
       refresh_token: this.jwtTokenService.sign(payloadRefreshToken, {
         secret: 'heheboi',
+      }),
+    };
+  }
+
+  async refreshTokens(user: any) {
+    const payload = { username: user.username, password: user.password };
+    const payloadRefreshToken = {
+      username: user.username,
+      password: user.password,
+    };
+
+    return {
+      access_token: this.jwtTokenService.sign(payload, {
+        secret: 'hehe',
+        expiresIn: '3m',
       }),
     };
   }

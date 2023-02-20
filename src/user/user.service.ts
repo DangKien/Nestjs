@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { merge } from 'lodash';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { merge } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -65,7 +65,7 @@ export class UserService {
 
   async findByUserName(username: string): Promise<User> {
     const user = await this.userRepository.findOne({
-      username,
+      username: username,
     });
     if (!user) {
       throw new NotFoundException(`User with username "${username}" not found`);
