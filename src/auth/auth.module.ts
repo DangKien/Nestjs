@@ -19,6 +19,7 @@ import { RefreshTokenStrategy } from "./login_auth/jwtRefreshToken.stategies";
     PassportModule,
     JwtModule.register({
       secret: "hehe",
+      signOptions: { expiresIn: "5d" },
     }),
     TypeOrmModule.forFeature([AccountLogin]),
     MailModule,
